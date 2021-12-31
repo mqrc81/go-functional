@@ -1,18 +1,16 @@
 package stream
 
-type Stream[T any] struct {
-	slice    *[]T
-	sequence *[]action
-	// TODO
+// TODO stream:
+//  - everything
+
+type Stream interface {
+}
+
+type stream[T any] struct {
+	values   []T
+	sequence []action
 }
 
 type action struct {
 	// TODO
-}
-
-func Of[T any](slice []T) *Stream[T] {
-	return &Stream[T]{
-		&slice,
-		&[]action{},
-	}
 }
