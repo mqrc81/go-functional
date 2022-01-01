@@ -1,10 +1,8 @@
 package check
 
-// Go doesn't allow functions with receivers to declare type parameters,
-// so we can't map T to another generic type U
-// (and I refuse to pass check as a parameter because it's ugly/inconsistent)
-// For now, MapToInt & MapToString exist, but to unveil Check's full potential,
-// hopefully Go will support this use-case with public release of Go 1.18
+// Go doesn't allow parameterized methods, thus we can't map from T to any type U
+// and I refuse to pass check as a parameter because it's ugly/inconsistent)
+// (see: https://go.googlesource.com/proposal/+/refs/heads/master/design/43651-type-parameters.md#No-parameterized-methods)
 
 func (c *check[T]) Map(method func(value T) T) *check[T] {
 	return mapOrEmpty(c, method)
