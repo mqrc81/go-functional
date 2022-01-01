@@ -16,3 +16,12 @@ func ToSlice[T any]() Collector[T] {
 func (s *stream[T]) Count() int {
 	return len(s.elements)
 }
+
+func (s *stream[T]) AnyMatch(matchFunc func(element T) bool) bool {
+	for _, el := range s.elements {
+		if matchFunc(el) {
+			return true
+		}
+	}
+	return false
+}
