@@ -8,7 +8,7 @@ func (s *stream[T]) Filter(filterFunc func(element T) bool) *stream[T] {
 func (s *stream[T]) applyFilter(filterFunc func(element T) bool) {
 	var toRemove []int
 	for i, el := range s.elements {
-		if filterFunc(el) {
+		if !filterFunc(el) {
 			toRemove = append(toRemove, i)
 		}
 	}

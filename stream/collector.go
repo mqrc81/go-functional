@@ -12,3 +12,7 @@ func ToSlice[T any]() Collector[T] {
 		return stream.elements
 	}
 }
+
+func (s *stream[T]) Count() int {
+	return len(s.elements)
+}
