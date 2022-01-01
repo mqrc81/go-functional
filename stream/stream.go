@@ -10,4 +10,5 @@ type Stream[T any] interface {
 
 type stream[T any] struct {
 	elements []T
+	ordered  bool
 }

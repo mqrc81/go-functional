@@ -21,10 +21,12 @@ func Empty[T any](options ...flag) *check[T] {
 type flag int
 
 const (
+	_ flag = iota
+
 	// Valid states that the value passed into check.Of() is not empty,
 	// thus allowing to skip the initial empty-check.
 	// Flag is ignored for check.Empty().
-	Valid flag = iota
+	Valid
 
 	// Strict enables strict-mode. With strict-mode, additionally,
 	// a slice, map or chan of length 0 is treated as empty.
