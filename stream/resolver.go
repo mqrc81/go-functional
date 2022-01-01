@@ -25,3 +25,12 @@ func (s *stream[T]) AnyMatch(matchFunc func(element T) bool) bool {
 	}
 	return false
 }
+
+func (s *stream[T]) AllMatch(matchFunc func(element T) bool) bool {
+	for _, el := range s.elements {
+		if !matchFunc(el) {
+			return false
+		}
+	}
+	return true
+}

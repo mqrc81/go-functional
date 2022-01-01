@@ -4,6 +4,8 @@ import (
 	"constraints"
 )
 
+// These helper functions can be used for: stream.Filter(), stream.AnyMatch, stream.AllMatch()
+
 func IsEven[T constraints.Integer](element T) bool {
 	return element%2 == 0
 }
