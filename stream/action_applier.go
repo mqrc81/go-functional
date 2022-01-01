@@ -53,7 +53,7 @@ func checkFilterParallel[T any](element T, index int, filterFunc func(element T)
 
 func removeFromSlice[T any](slice []T, toRremove []int) []T {
 	sort.Slice(toRremove, func(i, j int) bool {
-		return toRremove[i] < toRremove[j]
+		return toRremove[i] > toRremove[j]
 	})
 	lenSlice, lenRemove := len(slice), len(toRremove)
 	for i, val := range toRremove {
