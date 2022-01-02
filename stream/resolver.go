@@ -35,12 +35,8 @@ func (s *stream[T]) AllMatch(matchFunc func(element T) bool) bool {
 	return true
 }
 
-func (s *stream[T]) ForEach(forEachFunc func(element T) bool) {
+func (s *stream[T]) ForEach(forEachFunc func(element T)) {
 	for _, el := range s.elements {
-		if s.ordered {
-			forEachFunc(el)
-		} else {
-			go forEachFunc(el)
-		}
+		forEachFunc(el)
 	}
 }

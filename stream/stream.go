@@ -8,6 +8,7 @@ type Stream[T any] interface {
 	Count() int
 	AnyMatch(matchFunc func(element T) bool) bool
 	AllMatch(matchFunc func(element T) bool) bool
+	ForEach(forEachFunc func(element T))
 
 	Flag(flag flag) *stream[T]
 }
