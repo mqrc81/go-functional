@@ -37,9 +37,3 @@ func fromFlags(options []flag) (ordered bool) {
 	}
 	return ordered
 }
-
-func (s *stream[T]) Flag(options ...flag) *stream[T] {
-	ordered := fromFlags(options)
-	s.ordered = ordered
-	return s
-}

@@ -1,19 +1,19 @@
 package check
 
-func Of[T any](value T, options ...flag) *check[T] {
+func Of[T any](value T, options ...flag) check[T] {
 	strict, valid := fromFlags(options)
 
-	return &check[T]{
+	return check[T]{
 		value:  value,
-		valid:  valid,
+		valid:  valid || isValid(value, strict),
 		strict: strict,
 	}
 }
 
-func Empty[T any](options ...flag) *check[T] {
+func Empty[T any](options ...flag) check[T] {
 	strict, _ := fromFlags(options)
 
-	return &check[T]{
+	return check[T]{
 		strict: strict,
 	}
 }
@@ -46,7 +46,7 @@ func fromFlags(options []flag) (valid bool, strict bool) {
 	return valid, strict
 }
 
-func (c *check[T]) Flag(options ...flag) *check[T] {
+func (c check[T]) Flag(options ...flag) check[T] {
 	valid, strict := fromFlags(options)
 	c.valid = c.valid || valid
 	c.strict = c.strict || strict

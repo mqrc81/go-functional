@@ -1,30 +1,30 @@
 package check
 
-func (c *check[T]) Get() T {
+func (c check[T]) Get() T {
 	return c.value
 }
 
-func (c *check[T]) IsPresent() bool {
+func (c check[T]) IsPresent() bool {
 	return c.valid
 }
 
-func (c *check[T]) IsEmpty() bool {
+func (c check[T]) IsEmpty() bool {
 	return !c.IsPresent()
 }
 
-func (c *check[T]) IfPresent(method func(value T)) {
+func (c check[T]) IfPresent(method func(value T)) {
 	if c.IsPresent() {
 		method(c.value)
 	}
 }
 
-func (c *check[T]) IfEmpty(method func()) {
+func (c check[T]) IfEmpty(method func()) {
 	if c.IsEmpty() {
 		method()
 	}
 }
 
-func (c *check[T]) IfPresentOrElse(method func(value T), altMethod func()) {
+func (c check[T]) IfPresentOrElse(method func(value T), altMethod func()) {
 	if c.IsPresent() {
 		method(c.value)
 	} else {
@@ -32,7 +32,7 @@ func (c *check[T]) IfPresentOrElse(method func(value T), altMethod func()) {
 	}
 }
 
-func (c *check[T]) OrElseGet(altValue T) T {
+func (c check[T]) OrElseGet(altValue T) T {
 	if c.IsEmpty() {
 		return altValue
 	}
