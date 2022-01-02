@@ -1,5 +1,11 @@
 package stream
 
+// TODO stream
+//  - Map (to T, string, bool, int)
+//  - Peek
+//  - Sort
+//  - Ordered() & Parallel() instead of Flag()
+
 type Stream[T any] interface {
 	Filter(filterFunc func(element T) bool) *stream[T]
 	Reverse() *stream[T]

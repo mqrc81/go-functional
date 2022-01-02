@@ -5,6 +5,7 @@ import (
 )
 
 // TODO check:
+//  - Strict()/Loose() instead of Flag()
 //  - tests
 //  - more efficient (pointers etc.)
 
