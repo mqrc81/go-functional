@@ -29,3 +29,14 @@ func mapOrEmpty[T, U any](c *check[T], method func(value T) U) *check[U] {
 	}
 	return &newC
 }
+
+func (c *check[T]) OrElse(altValue T) *check[T] {
+	if c.IsEmpty() {
+		return &check[T]{
+			altValue,
+			isValid(altValue, c.strict),
+			c.strict,
+		}
+	}
+	return c
+}

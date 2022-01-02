@@ -32,17 +32,6 @@ func (c *check[T]) IfPresentOrElse(method func(value T), altMethod func()) {
 	}
 }
 
-func (c *check[T]) OrElse(altValue T) *check[T] {
-	if c.IsEmpty() {
-		return &check[T]{
-			altValue,
-			isValid(altValue, c.strict),
-			c.strict,
-		}
-	}
-	return c
-}
-
 func (c *check[T]) OrElseGet(altValue T) T {
 	if c.IsEmpty() {
 		return altValue

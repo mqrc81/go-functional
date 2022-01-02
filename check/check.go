@@ -15,15 +15,16 @@ type Check[T any] interface {
 	IfPresent(method func(value T))
 	IfEmpty(method func())
 	IfPresentOrElse(method func(value T), altMethod func())
-	OrElse(value T) *check[T]
 	OrElseGet(value T) T
 
 	Map(method func(value T) T) *check[T]
 	MapToInt(method func(value T) int) *check[int]
 	MapToString(method func(value T) string) *check[string]
 	MapToBool(method func(value T) bool) *check[bool]
+	OrElse(value T) *check[T]
 
 	Peek(method func(value T)) *check[T]
+	Flag(flag ...flag) *check[T]
 }
 
 type check[T any] struct {
