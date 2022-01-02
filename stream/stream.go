@@ -10,8 +10,9 @@ import (
 
 type Stream[T any] interface {
 	Filter(filterFunc func(element T) bool) stream[T]
-	Reduce(amount int) stream[T]
 	Reverse() stream[T]
+	Limit(maxSize int) stream[T]
+	Reduce(maxSize int, filterFunc func(element T) bool) stream[T]
 
 	Collect(Collector[T]) []T
 	Count() int
