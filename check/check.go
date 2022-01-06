@@ -5,7 +5,6 @@ import (
 )
 
 // TODO check:
-//  - Strict() & Loose() instead of Flag()
 //  - tests
 //  - more efficient (pointers etc.)
 
@@ -17,15 +16,14 @@ type Check[T any] interface {
 	IfEmpty(method func())
 	IfPresentOrElse(method func(value T), altMethod func())
 	OrElseGet(value T) T
-
 	Map(method func(value T) T) check[T]
 	MapToInt(method func(value T) int) check[int]
 	MapToString(method func(value T) string) check[string]
 	MapToBool(method func(value T) bool) check[bool]
 	OrElse(value T) check[T]
-
 	Peek(method func(value T)) check[T]
-	Flag(flag ...flag) check[T]
+	Strict() check[T]
+	Loose() check[T]
 }
 
 type check[T any] struct {

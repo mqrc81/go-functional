@@ -45,10 +45,3 @@ func fromFlags(options []flag) (valid bool, strict bool) {
 	}
 	return valid, strict
 }
-
-func (c check[T]) Flag(options ...flag) check[T] {
-	valid, strict := fromFlags(options)
-	c.valid = c.valid || valid
-	c.strict = c.strict || strict
-	return c
-}

@@ -40,3 +40,18 @@ func (c check[T]) OrElse(altValue T) check[T] {
 	}
 	return c
 }
+
+func (c check[T]) Peek(method func(value T)) check[T] {
+	method(c.value)
+	return c
+}
+
+func (c check[T]) Strict() check[T] {
+	c.strict = true
+	return c
+}
+
+func (c check[T]) Loose() check[T] {
+	c.strict = false
+	return c
+}
