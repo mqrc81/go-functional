@@ -1,5 +1,9 @@
 package stream
 
+import (
+	"go-functional/check"
+)
+
 func (s stream[T]) Collect() []T {
 	var result []T
 	for _, element := range s.elements {
@@ -59,4 +63,15 @@ func (s stream[T]) ForEach(forEachFunc func(element T)) {
 			forEachFunc(element)
 		}
 	}
+}
+
+func (s stream[T]) Find(matchFunc func(element T) bool) check.Check[T] {
+	for _, element := range s.elements {
+		if s.operations[0].apply(&element, &s.operations, 0, s.ordered) {
+			if matchFunc(element) {
+				return check.Of[T](element, check.Valid)
+			}
+		}
+	}
+	return check.Empty[T]()
 }
