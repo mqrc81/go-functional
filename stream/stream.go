@@ -22,6 +22,7 @@ type Stream[T any] interface {
 	AnyMatch(matchFunc func(element T) bool) bool
 	AllMatch(matchFunc func(element T) bool) bool
 	NoneMatch(matchFunc func(element T) bool) bool
+	Any() bool
 	ForEach(forEachFunc func(element T))
 	Find(findFunc func(element T) bool) check.Check[T]
 	Fold(initialValue T, foldFunc func(value T, element T) T) T
