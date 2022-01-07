@@ -86,7 +86,7 @@ func (s stream[T]) Fold(initialValue T, foldFunc func(value *T, element T)) T {
 	return result
 }
 
-func (s stream[T]) FoldInt(initialValue int, foldFunc func(value *int, element T)) int {
+func (s stream[T]) FoldToInt(initialValue int, foldFunc func(value *int, element T)) int {
 	var result = initialValue
 	for _, element := range s.elements {
 		if s.operations[0].apply(&element, &s.operations, 0, s.ordered) {
@@ -96,7 +96,7 @@ func (s stream[T]) FoldInt(initialValue int, foldFunc func(value *int, element T
 	return result
 }
 
-func (s stream[T]) FoldString(initialValue string, foldFunc func(value *string, element T)) string {
+func (s stream[T]) FoldToString(initialValue string, foldFunc func(value *string, element T)) string {
 	var result = initialValue
 	for _, element := range s.elements {
 		if s.operations[0].apply(&element, &s.operations, 0, s.ordered) {
