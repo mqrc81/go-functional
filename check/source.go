@@ -1,5 +1,9 @@
 package check
 
+import (
+	"fmt"
+)
+
 func Of[T any](value T, options ...flag) check[T] {
 	strict, valid := fromFlags(options)
 
@@ -41,6 +45,8 @@ func fromFlags(options []flag) (valid bool, strict bool) {
 			valid = true
 		case Strict:
 			strict = true
+		default:
+			panic(fmt.Sprint(option, " is not a valid flag argument"))
 		}
 	}
 	return valid, strict

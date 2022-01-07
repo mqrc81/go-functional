@@ -2,10 +2,11 @@ package stream
 
 import (
 	"constraints"
+	"fmt"
 )
 
 func Of[T any](elements []T, options ...flag) stream[T] {
-	ordered := fromFlags(options)
+	ordered := fromflags(options)
 	return stream[T]{
 		elements: elements,
 		ordered:  ordered,
@@ -23,7 +24,7 @@ func Empty[T any]() stream[T] {
 }
 
 func OfKeys[T comparable, V any](aMap map[T]V, options ...flag) stream[T] {
-	ordered := fromFlags(options)
+	ordered := fromflags(options)
 	keys := make([]T, len(aMap))
 	i := 0
 	for k := range aMap {
@@ -37,7 +38,7 @@ func OfKeys[T comparable, V any](aMap map[T]V, options ...flag) stream[T] {
 }
 
 func OfVals[K comparable, T any](aMap map[K]T, options ...flag) stream[T] {
-	ordered := fromFlags(options)
+	ordered := fromflags(options)
 	vals := make([]T, len(aMap))
 	i := 0
 	for _, v := range aMap {
@@ -56,7 +57,7 @@ func OfRange[T constraints.Integer](start T, end T, options ...flag) stream[T] {
 		return Empty[T]()
 	}
 
-	ordered := fromFlags(options)
+	ordered := fromflags(options)
 	s := stream[T]{
 		elements: make([]T, diff),
 		ordered:  ordered,
@@ -77,11 +78,13 @@ const (
 	Ordered
 )
 
-func fromFlags(options []flag) (ordered bool) {
+func fromflags(options []flag) (ordered bool) {
 	for _, option := range options {
 		switch option {
 		case Ordered:
 			ordered = true
+		default:
+			panic(fmt.Sprint(option, " is not a valid flag argument"))
 		}
 	}
 	return ordered

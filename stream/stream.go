@@ -8,6 +8,7 @@ import (
 //  - Map (to T, string, bool, int)
 //  - Sort
 //  - Distinct
+//  - CONCURRENT
 
 type Stream[T any] interface {
 	Filter(filterFunc func(element T) bool) stream[T]
@@ -22,7 +23,6 @@ type Stream[T any] interface {
 	AnyMatch(matchFunc func(element T) bool) bool
 	AllMatch(matchFunc func(element T) bool) bool
 	NoneMatch(matchFunc func(element T) bool) bool
-	Any() bool
 	ForEach(forEachFunc func(element T))
 	Find(findFunc func(element T) bool) check.Check[T]
 	Fold(initialValue T, foldFunc func(value T, element T) T) T
