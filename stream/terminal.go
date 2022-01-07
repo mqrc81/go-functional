@@ -75,3 +75,33 @@ func (s stream[T]) Find(matchFunc func(element T) bool) check.Check[T] {
 	}
 	return check.Empty[T]()
 }
+
+func (s stream[T]) Fold(initialValue T, foldFunc func(value *T, element T)) T {
+	var result = initialValue
+	for _, element := range s.elements {
+		if s.operations[0].apply(&element, &s.operations, 0, s.ordered) {
+			foldFunc(&result, element)
+		}
+	}
+	return result
+}
+
+func (s stream[T]) FoldInt(initialValue int, foldFunc func(value *int, element T)) int {
+	var result = initialValue
+	for _, element := range s.elements {
+		if s.operations[0].apply(&element, &s.operations, 0, s.ordered) {
+			foldFunc(&result, element)
+		}
+	}
+	return result
+}
+
+func (s stream[T]) FoldString(initialValue string, foldFunc func(value *string, element T)) string {
+	var result = initialValue
+	for _, element := range s.elements {
+		if s.operations[0].apply(&element, &s.operations, 0, s.ordered) {
+			foldFunc(&result, element)
+		}
+	}
+	return result
+}
