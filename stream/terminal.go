@@ -110,5 +110,5 @@ func (s *stream[T]) terminate(element *T) bool {
 	if len(s.operations) == 0 {
 		return true
 	}
-	return s.operations[0].apply(element, &s.operations, 0, s.ordered)
+	return s.operations[0].apply(element, &s.operations, 0, s.parallel)
 }

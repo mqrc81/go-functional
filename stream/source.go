@@ -6,10 +6,10 @@ import (
 )
 
 func Of[T any](elements []T, options ...flag) stream[T] {
-	ordered := fromflags(options)
+	parallel := fromflags(options)
 	return stream[T]{
 		elements: elements,
-		ordered:  ordered,
+		parallel: parallel,
 	}
 }
 
@@ -24,7 +24,7 @@ func Empty[T any]() stream[T] {
 }
 
 func OfKeys[T comparable, V any](aMap map[T]V, options ...flag) stream[T] {
-	ordered := fromflags(options)
+	parallel := fromflags(options)
 	keys := make([]T, len(aMap))
 	i := 0
 	for k := range aMap {
@@ -33,12 +33,12 @@ func OfKeys[T comparable, V any](aMap map[T]V, options ...flag) stream[T] {
 	}
 	return stream[T]{
 		elements: keys,
-		ordered:  ordered,
+		parallel: parallel,
 	}
 }
 
 func OfVals[K comparable, T any](aMap map[K]T, options ...flag) stream[T] {
-	ordered := fromflags(options)
+	parallel := fromflags(options)
 	vals := make([]T, len(aMap))
 	i := 0
 	for _, v := range aMap {
@@ -47,7 +47,7 @@ func OfVals[K comparable, T any](aMap map[K]T, options ...flag) stream[T] {
 	}
 	return stream[T]{
 		elements: vals,
-		ordered:  ordered,
+		parallel: parallel,
 	}
 }
 
@@ -57,10 +57,10 @@ func OfRange[T constraints.Integer](start T, end T, options ...flag) stream[T] {
 		return Empty[T]()
 	}
 
-	ordered := fromflags(options)
+	parallel := fromflags(options)
 	s := stream[T]{
 		elements: make([]T, diff),
-		ordered:  ordered,
+		parallel: parallel,
 	}
 	for num := start; num <= end; num++ {
 		s.elements[num-start] = num
@@ -73,19 +73,19 @@ type flag int
 const (
 	_ flag = iota
 
-	// Ordered ensures that the order is preserved.
-	// It is disabled by default.
-	Ordered
+	// Parallel enhances performance by executing all operations concurrently,
+	// thus disregarding the initial order. It is disabled by default.
+	Parallel
 )
 
-func fromflags(options []flag) (ordered bool) {
+func fromflags(options []flag) (parallel bool) {
 	for _, option := range options {
 		switch option {
-		case Ordered:
-			ordered = true
+		case Parallel:
+			parallel = true
 		default:
 			panic(fmt.Sprint(option, " is not a valid flag argument"))
 		}
 	}
-	return ordered
+	return parallel
 }
