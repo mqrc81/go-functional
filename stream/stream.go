@@ -11,14 +11,13 @@ import (
 
 type Stream[T any] interface {
 	Filter(filterFunc func(element T) bool) stream[T]
-	// Map(mapFunc func(element T) T) stream[T]
-	// MapToInt(mapFunc func(element T) int) stream[int]
-	// MapToString(mapFunc func(element T) string) stream[string]
-	// MapToBool(mapFunc func(element T) bool) stream[bool]
 	Limit(maxSize int) stream[T]
 	Reverse() stream[T]
 	// Distinct() stream[T]
 	// Sort() stream[T]
+	Map(mapFunc func(element T) T) stream[T]
+	MapToInt(mapFunc func(element T) int) stream[int]
+	MapToString(mapFunc func(element T) string) stream[string]
 	Peek(func(elements T)) stream[T]
 	Ordered() stream[T]
 	Parallel() stream[T]

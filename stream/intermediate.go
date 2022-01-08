@@ -37,6 +37,34 @@ func (s stream[T]) Map(mapFunc func(element T) T) stream[T] {
 	return s
 }
 
+func (s stream[T]) MapToInt(mapFunc func(element T) int) stream[int] {
+	var mapped []int
+	for _, element := range s.elements {
+		if s.terminate(&element) {
+			mapped = append(mapped, mapFunc(element))
+		}
+	}
+	return stream[int]{
+		elements:   mapped,
+		operations: nil,
+		parallel:   s.parallel,
+	}
+}
+
+func (s stream[T]) MapToString(mapFunc func(element T) string) stream[string] {
+	var mapped []string
+	for _, element := range s.elements {
+		if s.terminate(&element) {
+			mapped = append(mapped, mapFunc(element))
+		}
+	}
+	return stream[string]{
+		elements:   mapped,
+		operations: nil,
+		parallel:   s.parallel,
+	}
+}
+
 func (s stream[T]) Peek(peekFunc func(element T)) stream[T] {
 	s.operations = append(s.operations, peekOperation[T]{
 		peekFunc: peekFunc,
