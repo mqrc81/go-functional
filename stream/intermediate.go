@@ -30,6 +30,13 @@ func (s stream[T]) Reverse() stream[T] {
 	return s
 }
 
+func (s stream[T]) Map(mapFunc func(element T) T) stream[T] {
+	s.operations = append(s.operations, mapOperation[T]{
+		mapFunc: mapFunc,
+	})
+	return s
+}
+
 func (s stream[T]) Peek(peekFunc func(element T)) stream[T] {
 	s.operations = append(s.operations, peekOperation[T]{
 		peekFunc: peekFunc,

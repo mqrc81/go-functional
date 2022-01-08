@@ -12,32 +12,34 @@ const (
 )
 
 // TODO generify
-func Max() (int, func(value *int, element int)) {
-	return minInt, func(value *int, element int) {
-		if element > *value {
-			*value = element
+func Max() (int, func(value int, element int) int) {
+	return minInt, func(value int, element int) int {
+		if element > value {
+			value = element
 		}
+		return value
 	}
 }
 
 // TODO generify
-func Min() (int, func(value *int, element int)) {
-	return maxInt, func(value *int, element int) {
-		if element < *value {
-			*value = element
+func Min() (int, func(value int, element int) int) {
+	return maxInt, func(value int, element int) int {
+		if element < value {
+			value = element
 		}
+		return value
 	}
 }
 
-func Sum[T Number]() (T, func(value *T, element T)) {
-	return 0, func(value *T, element T) {
-		*value += element
+func Sum[T Number]() (T, func(value T, element T) T) {
+	return 0, func(value T, element T) T {
+		return value + element
 	}
 }
 
-func Product[T Number]() (T, func(value *T, element T)) {
-	return 1, func(value *T, element T) {
-		*value *= element
+func Product[T Number]() (T, func(value T, element T) T) {
+	return 1, func(value T, element T) T {
+		return value * element
 	}
 }
 

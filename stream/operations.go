@@ -37,6 +37,15 @@ func (o limitOperation[T]) apply(element *T, operations *[]operation[T], current
 	return false
 }
 
+type mapOperation[T any] struct {
+	mapFunc func(element T) T
+}
+
+func (o mapOperation[T]) apply(element *T, operations *[]operation[T], current int, ordered bool) bool {
+	*element = o.mapFunc(*element)
+	return applyIfHasNext(element, operations, current, ordered)
+}
+
 type peekOperation[T any] struct {
 	peekFunc func(element T)
 }

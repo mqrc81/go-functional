@@ -4,7 +4,7 @@ import (
 	"go-functional/check"
 )
 
-// TODO streamOld
+// TODO stream
 //  - Sort
 //  - Distinct
 //  - CONCURRENT
@@ -30,9 +30,9 @@ type Stream[T any] interface {
 	NoneMatch(matchFunc func(element T) bool) bool
 	ForEach(forEachFunc func(element T))
 	Find(findFunc func(element T) bool) check.Check[T]
-	Fold(initialValue T, foldFunc func(value *T, element T)) T
-	FoldToInt(initialValue int, foldFunc func(value *int, element T)) int
-	FoldToString(initialValue string, foldFunc func(value *string, element T)) string
+	Fold(initialValue T, foldFunc func(value T, element T) T) T
+	FoldToInt(initialValue int, foldFunc func(value int, element T) int) int
+	FoldToString(initialValue string, foldFunc func(value string, element T) string) string
 }
 
 // TODO use "containers/list" for operations
