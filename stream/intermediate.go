@@ -14,3 +14,20 @@ func (s stream[T]) Limit(maxSize int) stream[T] {
 	})
 	return s
 }
+
+func (s stream[T]) Peek(peekFunc func(element T)) stream[T] {
+	s.operations = append(s.operations, peekOperation[T]{
+		peekFunc: peekFunc,
+	})
+	return s
+}
+
+func (s stream[T]) Ordered() stream[T] {
+	s.ordered = true
+	return s
+}
+
+func (s stream[T]) Parallel() stream[T] {
+	s.ordered = false
+	return s
+}

@@ -36,3 +36,12 @@ func (o limitOperation[T]) apply(element *T, operations *[]operation[T], current
 	}
 	return false
 }
+
+type peekOperation[T any] struct {
+	peekFunc func(element T)
+}
+
+func (o peekOperation[T]) apply(element *T, operations *[]operation[T], current int, ordered bool) bool {
+	o.peekFunc(*element)
+	return applyIfHasNext(element, operations, current, ordered)
+}
