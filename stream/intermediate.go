@@ -30,6 +30,25 @@ func (s stream[T]) Reverse() stream[T] {
 	return s
 }
 
+func (s stream[T]) Sort(sort1Above2Func func(element1 T, element2 T) bool) stream[T] {
+	var sorted []T
+	for _, element := range s.elements {
+		if s.terminate(&element) {
+			sorted = append(sorted, element)
+			for i := 0; i < len(sorted)-1; i++ {
+				if !sort1Above2Func(element, sorted[i]) {
+					copy(sorted[i+1:], sorted[i:])
+					sorted[i] = element
+					break
+				}
+			}
+		}
+	}
+	s.elements = sorted
+	s.operations = nil
+	return s
+}
+
 func (s stream[T]) Map(mapFunc func(element T) T) stream[T] {
 	s.operations = append(s.operations, mapOperation[T]{
 		mapFunc: mapFunc,
@@ -45,9 +64,8 @@ func (s stream[T]) MapToInt(mapFunc func(element T) int) stream[int] {
 		}
 	}
 	return stream[int]{
-		elements:   mapped,
-		operations: nil,
-		parallel:   s.parallel,
+		elements: mapped,
+		parallel: s.parallel,
 	}
 }
 
@@ -59,9 +77,8 @@ func (s stream[T]) MapToString(mapFunc func(element T) string) stream[string] {
 		}
 	}
 	return stream[string]{
-		elements:   mapped,
-		operations: nil,
-		parallel:   s.parallel,
+		elements: mapped,
+		parallel: s.parallel,
 	}
 }
 

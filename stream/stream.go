@@ -6,15 +6,13 @@ import (
 
 // TODO stream
 //  - Sort
-//  - Distinct
 //  - CONCURRENT
 
 type Stream[T any] interface {
 	Filter(filterFunc func(element T) bool) stream[T]
 	Limit(maxSize int) stream[T]
 	Reverse() stream[T]
-	// Distinct() stream[T]
-	// Sort() stream[T]
+	Sort(sortFunc func(element1 T, element2 T) bool) stream[T]
 	Map(mapFunc func(element T) T) stream[T]
 	MapToInt(mapFunc func(element T) int) stream[int]
 	MapToString(mapFunc func(element T) string) stream[string]

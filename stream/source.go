@@ -13,7 +13,7 @@ func Of[T any](elements []T, options ...flag) stream[T] {
 	}
 }
 
-func From[T any](elements ...T) stream[T] {
+func OfElements[T any](elements ...T) stream[T] {
 	return stream[T]{
 		elements: elements,
 	}
@@ -23,7 +23,7 @@ func Empty[T any]() stream[T] {
 	return stream[T]{}
 }
 
-func OfKeys[T comparable, V any](aMap map[T]V, options ...flag) stream[T] {
+func OfMapKeys[T comparable, V any](aMap map[T]V, options ...flag) stream[T] {
 	parallel := fromflags(options)
 	keys := make([]T, len(aMap))
 	i := 0
@@ -37,7 +37,7 @@ func OfKeys[T comparable, V any](aMap map[T]V, options ...flag) stream[T] {
 	}
 }
 
-func OfVals[K comparable, T any](aMap map[K]T, options ...flag) stream[T] {
+func OfMapVals[K comparable, T any](aMap map[K]T, options ...flag) stream[T] {
 	parallel := fromflags(options)
 	vals := make([]T, len(aMap))
 	i := 0
