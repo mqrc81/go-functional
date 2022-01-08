@@ -5,21 +5,20 @@ import (
 )
 
 // TODO streamOld
-//  - Map (to T, string, bool, int)
 //  - Sort
 //  - Distinct
 //  - CONCURRENT
 
 type Stream[T any] interface {
 	Filter(filterFunc func(element T) bool) stream[T]
-	Map(mapFunc func(element T) T) stream[T]
-	MapToInt(mapFunc func(element T) int) stream[int]
-	MapToString(mapFunc func(element T) string) stream[string]
-	MapToBool(mapFunc func(element T) bool) stream[bool]
+	// Map(mapFunc func(element T) T) stream[T]
+	// MapToInt(mapFunc func(element T) int) stream[int]
+	// MapToString(mapFunc func(element T) string) stream[string]
+	// MapToBool(mapFunc func(element T) bool) stream[bool]
 	Limit(maxSize int) stream[T]
 	Reverse() stream[T]
-	Distinct() stream[T]
-	Sort() stream[T]
+	// Distinct() stream[T]
+	// Sort() stream[T]
 	Peek(func(elements T)) stream[T]
 	Ordered() stream[T]
 	Parallel() stream[T]
@@ -31,9 +30,9 @@ type Stream[T any] interface {
 	NoneMatch(matchFunc func(element T) bool) bool
 	ForEach(forEachFunc func(element T))
 	Find(findFunc func(element T) bool) check.Check[T]
-	Fold(initialValue T, foldFunc func(value T, element T) T) T
-	FoldToInt(initialValue int, foldFunc func(value int, element T) int) int
-	FoldToString(initialValue string, foldFunc func(value string, element T) string) string
+	Fold(initialValue T, foldFunc func(value *T, element T)) T
+	FoldToInt(initialValue int, foldFunc func(value *int, element T)) int
+	FoldToString(initialValue string, foldFunc func(value *string, element T)) string
 }
 
 // TODO use "containers/list" for operations
