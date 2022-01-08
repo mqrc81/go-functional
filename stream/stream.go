@@ -5,7 +5,6 @@ import (
 )
 
 // TODO stream
-//  - Sort
 //  - CONCURRENT
 
 type Stream[T any] interface {
@@ -32,7 +31,6 @@ type Stream[T any] interface {
 	FoldToString(initialValue string, foldFunc func(value string, element T) string) string
 }
 
-// TODO use "containers/list" for operations
 type stream[T any] struct {
 	elements   []T
 	operations []operation[T]

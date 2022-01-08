@@ -34,14 +34,7 @@ func (s stream[T]) Sort(sort1Above2Func func(element1 T, element2 T) bool) strea
 	var sorted []T
 	for _, element := range s.elements {
 		if s.terminate(&element) {
-			sorted = append(sorted, element)
-			for i := 0; i < len(sorted)-1; i++ {
-				if !sort1Above2Func(element, sorted[i]) {
-					copy(sorted[i+1:], sorted[i:])
-					sorted[i] = element
-					break
-				}
-			}
+			insertSorted(&sorted, &element, sort1Above2Func)
 		}
 	}
 	s.elements = sorted
@@ -103,4 +96,15 @@ func prepend[T any](slice *[]T, element T) {
 	*slice = append(*slice, element)
 	copy((*slice)[1:], *slice)
 	(*slice)[0] = element
+}
+
+func insertSorted[T any](sorted *[]T, element *T, sortFunc func(el1 T, el2 T) bool) {
+	*sorted = append(*sorted, *element)
+	for i := 0; i < len(*sorted)-1; i++ {
+		if !sortFunc(*element, (*sorted)[i]) {
+			copy((*sorted)[i+1:], (*sorted)[i:])
+			(*sorted)[i] = *element
+			break
+		}
+	}
 }
