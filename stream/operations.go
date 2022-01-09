@@ -46,6 +46,36 @@ func (o mapOperation[T]) apply(element *T, operations *[]operation[T], current i
 	return applyIfHasNext(element, operations, current, ordered)
 }
 
+type takeWhileOperation[T any] struct {
+	takeWhileFunc func(element T) bool
+	stopTaking    *bool
+}
+
+func (o takeWhileOperation[T]) apply(element *T, operations *[]operation[T], current int, ordered bool) bool {
+	if !*o.stopTaking {
+		if o.takeWhileFunc(*element) {
+			return applyIfHasNext(element, operations, current, ordered)
+		}
+		*o.stopTaking = true
+	}
+	return false
+}
+
+type dropWhileOperation[T any] struct {
+	dropWhileFunc func(element T) bool
+	stopDropping  *bool
+}
+
+func (o dropWhileOperation[T]) apply(element *T, operations *[]operation[T], current int, ordered bool) bool {
+	if !*o.stopDropping {
+		if o.dropWhileFunc(*element) {
+			return false
+		}
+		*o.stopDropping = true
+	}
+	return applyIfHasNext(element, operations, current, ordered)
+}
+
 type peekOperation[T any] struct {
 	peekFunc func(element T)
 }

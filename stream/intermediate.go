@@ -75,6 +75,22 @@ func (s stream[T]) MapToString(mapFunc func(element T) string) stream[string] {
 	}
 }
 
+func (s stream[T]) TakeWhile(takeWhileFunc func(element T) bool) stream[T] {
+	s.operations = append(s.operations, takeWhileOperation[T]{
+		takeWhileFunc: takeWhileFunc,
+		stopTaking:    new(bool),
+	})
+	return s
+}
+
+func (s stream[T]) DropWhile(dropWhileFunc func(element T) bool) stream[T] {
+	s.operations = append(s.operations, dropWhileOperation[T]{
+		dropWhileFunc: dropWhileFunc,
+		stopDropping:  new(bool),
+	})
+	return s
+}
+
 func (s stream[T]) Peek(peekFunc func(element T)) stream[T] {
 	s.operations = append(s.operations, peekOperation[T]{
 		peekFunc: peekFunc,

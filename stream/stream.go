@@ -15,6 +15,8 @@ type Stream[T any] interface {
 	Map(mapFunc func(element T) T) stream[T]
 	MapToInt(mapFunc func(element T) int) stream[int]
 	MapToString(mapFunc func(element T) string) stream[string]
+	TakeWhile(takeWhileFunc func(element T) bool) stream[T]
+	DropWhile(dropWhileFunc func(element T) bool) stream[T]
 	Peek(func(elements T)) stream[T]
 	Ordered() stream[T]
 	Parallel() stream[T]
