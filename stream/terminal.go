@@ -94,6 +94,30 @@ func (s stream[T]) Find(matchFunc func(element T) bool) check.Check[T] {
 	return check.Empty[T]()
 }
 
+func (s stream[T]) First() check.Check[T] {
+	for _, element := range s.elements {
+		if s.terminate(&element) {
+			return check.Of[T](element)
+		}
+	}
+	return check.Empty[T]()
+}
+
+func (s stream[T]) Last() check.Check[T] {
+	var result T
+	var notEmpty bool
+	for _, element := range s.elements {
+		if s.terminate(&element) {
+			result = element
+			notEmpty = true
+		}
+	}
+	if notEmpty {
+		return check.Of[T](result)
+	}
+	return check.Empty[T]()
+}
+
 func (s stream[T]) Fold(initialValue T, foldFunc func(value T, element T) T) T {
 	var result = initialValue
 	for _, element := range s.elements {
