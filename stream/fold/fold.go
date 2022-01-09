@@ -46,10 +46,3 @@ func Product[T Number]() (T, func(value T, element T) T) {
 type Number interface {
 	constraints.Integer | constraints.Float
 }
-
-// TODO add delimiter
-func Concat() (string, func(value *string, element string)) {
-	return "", func(value *string, element string) {
-		*value += element
-	}
-}

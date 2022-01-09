@@ -21,6 +21,7 @@ type Stream[T any] interface {
 
 	Collect() []T
 	Count() int
+	Concat(delimiter string) string
 	AnyMatch(matchFunc func(element T) bool) bool
 	AllMatch(matchFunc func(element T) bool) bool
 	NoneMatch(matchFunc func(element T) bool) bool

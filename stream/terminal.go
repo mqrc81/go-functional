@@ -1,6 +1,8 @@
 package stream
 
 import (
+	"fmt"
+
 	"go-functional/check"
 )
 
@@ -22,6 +24,22 @@ func (s stream[T]) Count() int {
 		}
 	}
 	return count
+}
+
+func (s stream[T]) Concat(delimiter string) string {
+	var result string
+	var notEmpty bool
+	for _, element := range s.elements {
+		if s.terminate(&element) {
+			if notEmpty {
+				result += delimiter + fmt.Sprint(element)
+			} else {
+				notEmpty = true
+				result += fmt.Sprint(element)
+			}
+		}
+	}
+	return result
 }
 
 func (s stream[T]) AnyMatch(matchFunc func(element T) bool) bool {
