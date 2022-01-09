@@ -3,7 +3,7 @@ package stream
 import (
 	"fmt"
 
-	"go-functional/check"
+	"github.com/mqrc81/go-functional/check"
 )
 
 func (s stream[T]) Collect() []T {

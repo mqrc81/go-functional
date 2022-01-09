@@ -1,7 +1,7 @@
 package stream
 
 import (
-	"go-functional/check"
+	"github.com/mqrc81/go-functional/check"
 )
 
 // TODO stream
