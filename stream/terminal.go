@@ -6,7 +6,7 @@ import (
 	"github.com/mqrc81/go-functional/check"
 )
 
-func (s stream[T]) Collect() []T {
+func (s stream[T]) ToSlice() []T {
 	var result []T
 	for _, element := range s.elements {
 		if s.terminate(&element) {
@@ -99,21 +99,6 @@ func (s stream[T]) First() check.Check[T] {
 		if s.terminate(&element) {
 			return check.Of[T](element)
 		}
-	}
-	return check.Empty[T]()
-}
-
-func (s stream[T]) Last() check.Check[T] {
-	var result T
-	var notEmpty bool
-	for _, element := range s.elements {
-		if s.terminate(&element) {
-			result = element
-			notEmpty = true
-		}
-	}
-	if notEmpty {
-		return check.Of[T](result)
 	}
 	return check.Empty[T]()
 }
