@@ -6,6 +6,7 @@ import (
 
 // TODO stream
 //  - CONCURRENT
+//  - tests
 
 type Stream[T any] interface {
 	Filter(filterFunc func(element T) bool) stream[T]
@@ -17,7 +18,7 @@ type Stream[T any] interface {
 	MapToString(mapFunc func(element T) string) stream[string]
 	TakeWhile(takeWhileFunc func(element T) bool) stream[T]
 	DropWhile(dropWhileFunc func(element T) bool) stream[T]
-	Peek(func(elements T)) stream[T]
+	Peek(peekFunc func(elements T)) stream[T]
 	Ordered() stream[T]
 	Parallel() stream[T]
 
