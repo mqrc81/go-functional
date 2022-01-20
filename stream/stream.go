@@ -34,6 +34,7 @@ type Stream[T any] interface {
 	Fold(initialValue T, foldFunc func(value T, element T) T) T
 	FoldToInt(initialValue int, foldFunc func(value int, element T) int) int
 	FoldToString(initialValue string, foldFunc func(value string, element T) string) string
+	Split(splitFunc func(element T) bool) (stream[T], stream[T])
 }
 
 type stream[T any] struct {

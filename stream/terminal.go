@@ -133,6 +133,21 @@ func (s stream[T]) FoldToString(initialValue string, foldFunc func(value string,
 	return result
 }
 
+func (s stream[T]) Split(splitFunc func(element T) bool) (stream[T], stream[T]) {
+	sA := stream[T]{parallel: s.parallel}
+	sB := stream[T]{parallel: s.parallel}
+	for _, element := range s.elements {
+		if s.terminate(&element) {
+			if splitFunc(element) {
+				sA.elements = append(sA.elements, element)
+			} else {
+				sB.elements = append(sB.elements, element)
+			}
+		}
+	}
+	return sA, sB
+}
+
 func (s *stream[T]) terminate(element *T) bool {
 	if len(s.operations) == 0 {
 		return true
